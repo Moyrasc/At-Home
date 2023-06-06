@@ -7,9 +7,14 @@ import db from './config/db.js';
 //Crear app
 const app = express()
 
+//Habilitar lectura datos de formulario
+app.use(express.urlencoded({ extended: true }))
+
+
 //Conexión a la base de datos
 try {
     await db.authenticate();
+    db.sync()
     console.log('Conexión correcta a la BBDD')
 } catch (error) {
     console.log(error)
