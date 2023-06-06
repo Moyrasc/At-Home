@@ -21,7 +21,7 @@ const emailRegistro = async (datos) => {
         text: 'Verifica tu cuenta',
         html: `<p>Hola ${nombre + '' + apellido}, bienvenid@ a AtHome.com</p>
             <p>Para poder acceder a tu cuenta debes hacer click en el siguiente enlace:
-            <a href="">Confirmar Cuenta</a></p>  
+            <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta</a></p>  
             <p>Si tu no creaste esta cuenta, puedes ignorar el mensaje</p>`
     })
 
