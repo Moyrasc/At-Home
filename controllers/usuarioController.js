@@ -1,7 +1,7 @@
 import { check, validationResult } from 'express-validator';
 import Usuario from '../models/Usuario.js';
 import { generarId } from '../helpers/tokens.js';
-import { emailRegistro } from '../helpers/emails.js';
+import { emailRegistro, olvidePassword } from '../helpers/emails.js';
 
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
@@ -97,15 +97,72 @@ const confirmarCuenta = async (req, res) => {
         mensaje: 'Tu cuenta ha sido confirmada y creada con éxito'
     })
 }
+//Esta función es solo para mostrar la vista de recuperación
 const formularioRecuperarPassword = (req, res) => {
     res.render('auth/recuperar-password', {
-        pagina: 'Recuperar acceso a tu cuenta'
+        pagina: 'Recuperar acceso a tu cuenta',
+        csrfToken: req.csrfToken(),
     })
+}
+const resetearPassword = async (req, res) => {
+    //Validación
+    await check('email').isEmail().withMessage('El email no es valido').run(req)
+
+    let resultado = validationResult(req)
+
+    //Verificar resultado vacio
+    if (!resultado.isEmpty()) {
+        //Errores
+        return res.render('auth/recuperar-password', {
+            pagina: 'Recuperar acceso a tu cuenta',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array(),
+        })
+    }
+    //Buscar usuario registrado con ese email
+    const { email } = req.body
+    const usuario = await Usuario.findOne({ where: { email } })
+    if (!usuario) {
+        return res.render('auth/recuperar-password', {
+            pagina: 'Recuperar acceso a tu cuenta',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: 'El email no pertenece a ningún usuario' }],
+        })
+    }
+    //Generar token de recuperación 
+    usuario.token = generarId();
+    await usuario.save()
+
+    //Enviar email
+    olvidePassword({
+        email: usuario.email,
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        token: usuario.token
+    })
+
+    //Renderizar mensaje de envio
+
+    res.render('template/mensaje', {
+        pagina: 'Reestablece tu Password',
+        mensaje: 'Hemos enviado un email con las instrucciones'
+    })
+
+}
+const comprobarToken = (req, res, next) => {
+    next()
+
+}
+const nuevoPassword = (req, res) => {
+
 }
 export {
     formularioLogin,
     formularioRegistro,
     registrar,
     confirmarCuenta,
-    formularioRecuperarPassword
+    formularioRecuperarPassword,
+    resetearPassword,
+    comprobarToken,
+    nuevoPassword
 }
