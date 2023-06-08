@@ -24,7 +24,6 @@ const emailRegistro = async (datos) => {
             <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta</a></p>  
             <p>Si tu no creaste esta cuenta, puedes ignorar el mensaje</p>`
     })
-
 }
 const olvidePassword = async (datos) => {
 
@@ -47,10 +46,9 @@ const olvidePassword = async (datos) => {
         text: 'Olvido su contraseña ',
         html: `<p>Hola ${nombre + '' + apellido}, has solicitado restablecer tu contraseña</p>
             <p> Sigue el siguiente enlace para poder crear un password nuevo:
-            <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/recuperar-password/:token/${token}">Reestablecer Password</a></p>  
+            <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/recuperar-password/${token}">Reestablecer Password</a></p>  
             <p>Si tu no solicitaste el cambio de password , puedes ignorar el mensaje</p>`
     })
-
 }
 export {
     emailRegistro,
