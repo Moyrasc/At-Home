@@ -6,7 +6,15 @@ const admin = (req, res) => {
     })
 
 }
+//Formulario crear un Inmueble nuevo
+const crear = (req, res) => {
+    res.render('propiedades/crear', {
+        pagina: 'Crear Inmueble',
+        barra: true
+    })
+}
 
 export {
-    admin
+    admin,
+    crear
 }
