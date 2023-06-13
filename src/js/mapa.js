@@ -5,11 +5,12 @@
     const mapa = L.map('mapa').setView([lat, lng], 15);
     let marker;
 
+    //Provider y Geocoder
+    const geocodeService = L.esri.Geocoding.geocodeService();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mapa);
-
     //Marcador para la localizacion
     marker = new L.marker([lat, lng], {
         draggable: true,
@@ -21,9 +22,13 @@
         marker = e.target
 
         const posicion = marker.getLatLng();
-        console.log(posicion)
-
+        //Centrar el marcador del mapa 
         mapa.panTo(new L.LatLng(posicion.lat, posicion.lng))
+        //Obtener info calle al soltar marcador
+        geocodeService.reverse().latlng(posicion, 15).run(function (error, resultado) {
+            marker.bindPopup(resultado.address.LongLabel)
+        })
+
     })
 
 })()
