@@ -10,13 +10,20 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(mapa);
 
-    //Pin para la localizacion
-
+    //Marcador para la localizacion
     marker = new L.marker([lat, lng], {
         draggable: true,
         autoPan: true
     })
         .addTo(mapa)
+    //Detectar el movimiento del marcador
+    marker.on('moveend', function (e) {
+        marker = e.target
 
+        const posicion = marker.getLatLng();
+        console.log(posicion)
+
+        mapa.panTo(new L.LatLng(posicion.lat, posicion.lng))
+    })
 
 })()
