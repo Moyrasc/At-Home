@@ -27,6 +27,13 @@
         //Obtener info calle al soltar marcador
         geocodeService.reverse().latlng(posicion, 15).run(function (error, resultado) {
             marker.bindPopup(resultado.address.LongLabel)
+            //Volcar datos en los campos del form
+            //solo lectura
+            document.querySelector('.calle').textContent = resultado.address.Address ?? '';
+            //esto se almacenará en la bbdd
+            document.querySelector('#calle').value = resultado.address.Address ?? '';
+            document.querySelector('#lat').value = resultado.latlng.lat ?? '';
+            document.querySelector('#lng').value = resultado.latlng.lng ?? '';
         })
 
     })
