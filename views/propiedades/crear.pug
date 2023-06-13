@@ -24,8 +24,34 @@ block contenido
                                 option(value="") - Seleccione -
 
                         div(class="md:w-1/2")
-                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="categoria") Precio
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="precio") Precio
                             select#precio.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="precio")
-                                option(value="") - Seleccione -          
+                                option(value="") - Seleccione - 
 
+                    div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="habitaciones") Habitaciones
+                            select#habitaciones.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="habitaciones")
+                                option(value="") - Seleccione -
+                                - let h = 1;
+                                    while h <= 10 
+                                        option(value=h) #{h++}
+                        
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="wc") WC
+                            select#wc.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="wc")
+                                option(value="") - Seleccione -
+                                - let w = 1;
+                                    while w <= 4 
+                                        option(value=w) #{w++}
+                        
+                        div(class="md:w-1/3")
+                            label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="garaje") Plaza de Garaje
+                            select#garaje.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="garaje")
+                                option(value="") - Seleccione -
+                                - let g = 0;
+                                    while g <= 2 
+                                        option(value=g) #{g++}
+                                        
 
