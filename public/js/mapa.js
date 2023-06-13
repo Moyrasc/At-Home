@@ -16,7 +16,7 @@
   \************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\nalert('aqui ira el mapa')\n\n//# sourceURL=webpack://at-home/./src/js/mapa.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n(function () {\r\n\r\n    const lat = 37.6175227;\r\n    const lng = -4.3275976;\r\n    const mapa = L.map('mapa').setView([lat, lng], 15);\r\n\r\n\r\n    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n        attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'\r\n    }).addTo(mapa);\r\n\r\n\r\n})()\n\n//# sourceURL=webpack://at-home/./src/js/mapa.js?");
 
 /***/ })
 
