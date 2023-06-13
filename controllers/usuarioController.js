@@ -1,7 +1,8 @@
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
+
 import Usuario from '../models/Usuario.js';
-import { generarId } from '../helpers/tokens.js';
+import { generarJWT, generarId } from '../helpers/tokens.js';
 import { emailRegistro, olvidePassword } from '../helpers/emails.js';
 
 const formularioLogin = (req, res) => {
@@ -26,6 +27,35 @@ const autenticar = async (req, res) => {
             errores: resultado.array(),
         })
     }
+    const { email, password } = req.body
+    //Comprobar si el usuario existe
+    const usuario = await Usuario.findOne({ where: { email } })
+    if (!usuario) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: 'El usuario no existe' }],
+        })
+    }
+    //Comprobar si el usuario esta confirmado
+    if (!usuario.confirmado) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: 'Tu cuenta no esta confirmada' }],
+        })
+    }
+    //Comprobar si la contraseña es correcta
+    if (!usuario.verificarPassword(password)) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar sesión',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: 'El email y/o password es incorrecto' }],
+        })
+    }
+    //Autenticar al usuario
+    const token = generarJWT(usuario.id)
+    console.log(token)
 }
 const formularioRegistro = (req, res) => {
     res.render('auth/registro', {
