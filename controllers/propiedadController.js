@@ -1,3 +1,4 @@
+import { validationResult } from 'express-validator';
 import Precio from '../models/Precio.js';
 import Categoria from '../models/Categoria.js'
 
@@ -6,7 +7,6 @@ const admin = (req, res) => {
         pagina: 'Mis Inmuebles',
         barra: true
     })
-
 }
 //Formulario crear un Inmueble nuevo
 const crear = async (req, res) => {
@@ -18,12 +18,32 @@ const crear = async (req, res) => {
     res.render('propiedades/crear', {
         pagina: 'Crear Inmueble',
         barra: true,
+        csrfToken: req.csrfToken(),
         categorias,
         precios
     })
 }
+const guardar = async (req, res) => {
+    //Resultado validacion
+    let resultado = validationResult(req)
+    if (!resultado.isEmpty()) {
+        const [categorias, precios] = await Promise.all([
+            Categoria.findAll(),
+            Precio.findAll()
+        ])
+        return res.render('propiedades/crear', {
+            pagina: 'Crear Inmueble',
+            barra: true,
+            csrfToken: req.csrfToken(),
+            categorias,
+            precios,
+            errores: resultado.array()
+        })
+    }
+}
 
 export {
     admin,
-    crear
+    crear,
+    guardar
 }
