@@ -42,19 +42,25 @@ const guardar = async (req, res) => {
         })
     }
     //Crear registro
-    const { titulo, descripcion, habitaciones, wc, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
+    const { titulo, descripcion, habitaciones, wc, garaje, calle, lat, lng, precio: precioId, categoria: categoriaId } = req.body
+    const { id: usuarioId } = req.usuario
     try {
         const propiedadGuardada = await Propiedad.create({
             titulo,
             descripcion,
             habitaciones,
             wc,
+            garaje,
             calle,
             lat,
             lng,
             precioId,
-            categoriaId
+            categoriaId,
+            usuarioId,
+            imagen: ''
         })
+        const { id } = propiedadGuardada
+        res.redirect(`/propiedades/agregar-imagen/${id}`)
     } catch (error) {
         console.log(error)
     }

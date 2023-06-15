@@ -4,8 +4,7 @@ import db from '../config/db.js'
 const Propiedad = db.define('propiedades', {
     id: {
         type: DataTypes.UUID,
-        defaulValue: DataTypes.UUIDV4,
-        allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
     titulo: {
@@ -47,7 +46,7 @@ const Propiedad = db.define('propiedades', {
     publicado: {
         type: DataTypes.BOOLEAN(),
         allowNull: false,
-        defaulValue: false
+        defaultValue: false
     }
 
 })
