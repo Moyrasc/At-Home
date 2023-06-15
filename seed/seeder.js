@@ -1,8 +1,9 @@
 import { exit } from 'node:process';
 import categorias from "./categorias.js";
 import precios from './precios.js';
+import usuarios from './usuarios.js';
 import db from "../config/db.js";
-import { Categoria, Precio } from "../models/index.js"
+import { Categoria, Precio, Usuario } from "../models/index.js"
 
 const importarDatos = async () => {
     try {
@@ -14,7 +15,8 @@ const importarDatos = async () => {
         //Ambos inician al mismo tiempo ya que no dependen el uno del otro
         await Promise.all([
             Categoria.bulkCreate(categorias),
-            Precio.bulkCreate(precios)
+            Precio.bulkCreate(precios),
+            Usuario.bulkCreate(usuarios)
         ])
         console.log('Datos importados correctamente')
         //El código exit 0 o sin número es porque finaliza la ejecución con éxito
