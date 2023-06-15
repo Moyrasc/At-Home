@@ -54,7 +54,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let h = 1;
                                     while h <= 10 
-                                        option(value=h) #{h++}
+                                        option(value=h selected= datos.habitaciones ? datos.habitaciones == h ? true : false : null) #{h++}
                         
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="wc") WC
@@ -62,7 +62,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let w = 1;
                                     while w <= 4 
-                                        option(value=w) #{w++}
+                                        option(value=w selected= datos.wc ? datos.wc == w ? true : false : null) #{w++}
                         
                         div(class="md:w-1/3")
                             label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold(for="garaje") Plaza de Garaje
@@ -70,7 +70,7 @@ block contenido
                                 option(value="") - Seleccione -
                                 - let g = 0;
                                     while g <= 2 
-                                        option(value=g) #{g++}
+                                        option(value=g selected= datos.garaje ? datos.garaje == g ? true : false : null) #{g++}
 
                 div.border-gray-200.border-t.py-5.space-y-2
                     h3.text-lg.leading-6.font-medium.text-gray-900 Ubicación
@@ -78,11 +78,11 @@ block contenido
                     #mapa.h-96
 
                     div 
-                        p.calle
+                        p.calle= datos.calle ? datos.calle : ''
 
-                    input(type="hidden" name="calle" id="calle")
-                    input(type="hidden" name="lat" id="lat")
-                    input(type="hidden" name="lng" id="lng")
+                    input(type="hidden" name="calle" id="calle" value= datos.calle ? datos.calle : '')
+                    input(type="hidden" name="lat" id="lat" value= datos.lat ? datos.lat : '')
+                    input(type="hidden" name="lng" id="lng" value= datos.lng ? datos.lng : '')
 
                 input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 rounded text-white font-bold uppercase cursor-pointer" type="submit" value="Añadir Imagen")                            
 
