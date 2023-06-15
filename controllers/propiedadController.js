@@ -4,7 +4,7 @@ import { Precio, Categoria, Propiedad } from '../models/index.js'
 const admin = (req, res) => {
     res.render('propiedades/admin', {
         pagina: 'Mis Inmuebles',
-        barra: true
+
     })
 }
 //Formulario crear un Inmueble nuevo
@@ -16,7 +16,6 @@ const crear = async (req, res) => {
     ])
     res.render('propiedades/crear', {
         pagina: 'Crear Inmueble',
-        barra: true,
         csrfToken: req.csrfToken(),
         categorias,
         precios,
@@ -33,7 +32,6 @@ const guardar = async (req, res) => {
         ])
         return res.render('propiedades/crear', {
             pagina: 'Crear Inmueble',
-            barra: true,
             csrfToken: req.csrfToken(),
             categorias,
             precios,
@@ -66,8 +64,15 @@ const guardar = async (req, res) => {
     }
 }
 
+const agregarImagen = async (req, res) => {
+    res.render('propiedades/agregar-imagen', {
+        pagina: 'Agregar Imágenes'
+    })
+}
+
 export {
     admin,
     crear,
-    guardar
+    guardar,
+    agregarImagen
 }

@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { admin, crear, guardar } from "../controllers/propiedadController.js";
+import { admin, agregarImagen, crear, guardar } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 
 const router = express.Router()
@@ -17,6 +17,7 @@ router.post('/propiedades/crear', protegerRuta,
     body('garaje').isNumeric().withMessage('Selecciona el número de plazas de garaje'),
     body('lat').notEmpty().withMessage('Ubica el inmueble en el mapa'),
     guardar)
+router.get('/propiedades/agregar-imagen/:id', agregarImagen)
 
 
 
