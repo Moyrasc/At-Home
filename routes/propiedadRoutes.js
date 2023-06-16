@@ -18,8 +18,14 @@ router.post('/propiedades/crear', protegerRuta,
     body('garaje').isNumeric().withMessage('Selecciona el número de plazas de garaje'),
     body('lat').notEmpty().withMessage('Ubica el inmueble en el mapa'),
     guardar)
-router.get('/propiedades/agregar-imagen/:id', protegerRuta, agregarImagen)
-router.post('/propiedades/agregar-imagen/:id', protegerRuta, upload.single('imagen'), almacenarImagen)
+router.get('/propiedades/agregar-imagen/:id',
+    protegerRuta,
+    agregarImagen)
+
+router.post('/propiedades/agregar-imagen/:id',
+    protegerRuta,
+    upload.single('imagen'),
+    almacenarImagen)
 
 
 

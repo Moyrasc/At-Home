@@ -93,7 +93,6 @@ const almacenarImagen = async (req, res, next) => {
     const { id } = req.params
     //Validar que exista el inmueble
     const propiedad = await Propiedad.findByPk(id)
-
     if (!propiedad) {
         return res.redirect('/mis-propiedades')
     }
@@ -102,11 +101,11 @@ const almacenarImagen = async (req, res, next) => {
         return res.redirect('/mis-propiedades')
     }
     //Validar que la propiedad pertenece al usuario
-
     if (req.usuario.id.toString() !== propiedad.usuarioId.toString()) {
         return res.redirect('/mis-propiedades')
     }
     try {
+        console.log(req.file)
         //Almacenar imagen y publicar propiedad
         propiedad.imagen = req.file.filename;
         propiedad.publicado = 1
