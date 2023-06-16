@@ -65,14 +65,65 @@ const guardar = async (req, res) => {
 }
 
 const agregarImagen = async (req, res) => {
+    const { id } = req.params
+
+    //Validar que exista el inmueble
+    const propiedad = await Propiedad.findByPk(id)
+
+    if (!propiedad) {
+        return res.redirect('/mis-propiedades')
+    }
+    //Validar que no este publicada
+    if (propiedad.publicado) {
+        return res.redirect('/mis-propiedades')
+    }
+    //Validar que la propiedad pertenece al usuario
+    console.log(req.usuario)
+    if (req.usuario.id.toString() !== propiedad.usuarioId.toString()) {
+        return res.redirect('/mis-propiedades')
+    }
     res.render('propiedades/agregar-imagen', {
-        pagina: 'Agregar Imágenes'
+        pagina: `Agregar imágenes de: ${propiedad.titulo}`,
+        csrfToken: req.csrfToken(),
+        propiedad
     })
+}
+
+const almacenarImagen = async (req, res, next) => {
+    const { id } = req.params
+    //Validar que exista el inmueble
+    const propiedad = await Propiedad.findByPk(id)
+
+    if (!propiedad) {
+        return res.redirect('/mis-propiedades')
+    }
+    //Validar que no este publicada
+    if (propiedad.publicado) {
+        return res.redirect('/mis-propiedades')
+    }
+    //Validar que la propiedad pertenece al usuario
+
+    if (req.usuario.id.toString() !== propiedad.usuarioId.toString()) {
+        return res.redirect('/mis-propiedades')
+    }
+    try {
+        //Almacenar imagen y publicar propiedad
+        propiedad.imagen = req.file.filename;
+        propiedad.publicado = 1
+
+        await propiedad.save()
+        next()
+    } catch (error) {
+        console.log(error)
+    }
+
+
 }
 
 export {
     admin,
     crear,
     guardar,
-    agregarImagen
+    agregarImagen,
+    almacenarImagen
 }
