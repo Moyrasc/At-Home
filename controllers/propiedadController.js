@@ -9,7 +9,8 @@ const admin = async (req, res) => {
             usuarioId: id
         },
         include: [
-            { model: Categoria }
+            { model: Categoria },
+            { model: Precio }
         ]
     })
     res.render('propiedades/admin', {

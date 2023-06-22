@@ -17,23 +17,18 @@ block contenido
                 ul(class="divide-y divide-gray-200")
                     each propiedad in propiedades 
                         li
-                            div(class="p-6 w-fill flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 gap-4")
+                            div(class="p-6 w-fill flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-8 gap-4 md:space-y-0")
                                 div(class="sm:w-1/4 md:w-1/6")
                                     img(src=`uploads/${propiedad.imagen}` alt=`Imagen propiedad${propiedad.titulo}` class="w-full block")
-                                div(class="sm:w-2/4 md:w-3/6 lg:w-4/6")
+                                div(class="sm:w-2/4 md:w-3/6 lg:w-4/6 space-y-3")
                                     a(class="block text-2xl font-extrabold text-indigo-600 truncate" href="#")=propiedad.titulo
 
                                     p(class="text-sm text-black font-bold")=propiedad.categoria.nombre
 
-                                    p 
+                                    p(class="text-sm text-gray-500  font-bold flex items-center")
                                         svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6")
                                             path(fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.902 7.098a3.75 3.75 0 013.903-.884.75.75 0 10.498-1.415A5.25 5.25 0 008.005 9.75H7.5a.75.75 0 000 1.5h.054a5.281 5.281 0 000 1.5H7.5a.75.75 0 000 1.5h.505a5.25 5.25 0 006.494 2.701.75.75 0 00-.498-1.415 3.75 3.75 0 01-4.252-1.286h3.001a.75.75 0 000-1.5H9.075a3.77 3.77 0 010-1.5h3.675a.75.75 0 000-1.5h-3c.105-.14.221-.274.348-.402z" clip-rule="evenodd")
-
-
-
-
-
-
+                                        = propiedad.precio.nombre    
 
                                 div(class="sm:w-1/4 md:w-2/6 lg:w-1/6") 
 
