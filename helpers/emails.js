@@ -1,15 +1,6 @@
 import nodemailer from 'nodemailer'
-
+import transport from './nodemailer'
 const emailRegistro = async (datos) => {
-
-    const transport = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
 
     const { nombre, apellido, email, token } = datos
 
@@ -26,16 +17,6 @@ const emailRegistro = async (datos) => {
     })
 }
 const olvidePassword = async (datos) => {
-
-    const transport = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST,
-        port: process.env.EMAIL_PORT,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS
-        }
-    });
-
     const { nombre, apellido, email, token } = datos
 
     //Envio de email recuperación
