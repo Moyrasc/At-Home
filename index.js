@@ -43,5 +43,5 @@ app.use('/', propiedadRoutes)
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log(`Servidor funcionando en puerto ${port}`)
+    console.log(`Servidor funcionando en puerto http://localhost:${port}`)
 });

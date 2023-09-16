@@ -5,7 +5,7 @@ import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
 
 const router = express.Router()
-
+router.get('/', (req, res) => res.send("Prueba"))
 router.get('/mis-propiedades', protegerRuta, admin)
 router.get('/propiedades/crear', protegerRuta, crear)
 router.post('/propiedades/crear', protegerRuta,
