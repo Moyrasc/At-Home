@@ -5,6 +5,7 @@ import csrf from "csurf";
 import cookieParser from 'cookie-parser';
 import usuarioRoutes from './routes/usuarioRoutes.js'
 import propiedadRoutes from './routes/propiedadRoutes.js'
+import appRoutes from './routes/appRoutes.js'
 import db from './config/db.js';
 
 //Crear app
@@ -36,6 +37,7 @@ app.set('views', './views')
 app.use(express.static('public'))
 
 //Routing
+app.use('/', appRoutes)
 app.use('/auth', usuarioRoutes)
 app.use('/', propiedadRoutes)
 
