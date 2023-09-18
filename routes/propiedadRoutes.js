@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { admin, agregarImagen, almacenarImagen, crear, guardar, editar, guardarCambios } from "../controllers/propiedadController.js";
+import { admin, agregarImagen, almacenarImagen, crear, guardar, editar, guardarCambios, eliminar } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
 
@@ -42,6 +42,6 @@ router.post('/propiedades/editar/:id', protegerRuta,
     body('lat').notEmpty().withMessage('Ubica el inmueble en el mapa'),
     guardarCambios)
 
-
+router.post('/propiedades/eliminar/:id',protegerRuta, eliminar)
 
 export default router
