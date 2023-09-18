@@ -2,6 +2,7 @@ import { unlink } from 'node:fs/promises'
 import { validationResult } from 'express-validator';
 import { Precio, Categoria, Propiedad } from '../models/index.js'
 
+//Area Privada
 const admin = async (req, res) => {
 
     const { id } = req.usuario;
@@ -77,7 +78,6 @@ const guardar = async (req, res) => {
         console.log(error)
     }
 }
-
 const agregarImagen = async (req, res) => {
     const { id } = req.params
 
@@ -101,7 +101,6 @@ const agregarImagen = async (req, res) => {
         propiedad
     })
 }
-
 const almacenarImagen = async (req, res, next) => {
     const { id } = req.params
     //Validar que exista el inmueble
@@ -128,12 +127,9 @@ const almacenarImagen = async (req, res, next) => {
     } catch (error) {
         console.log(error)
     }
-
-
 }
 const editar = async( req, res ) => {
     const { id } = req.params
-
     //Validar que la propiedad exista
     const propiedad = await Propiedad.findByPk(id)
     if(!propiedad){
@@ -156,7 +152,6 @@ const editar = async( req, res ) => {
     })
 
 }
-
 const guardarCambios = async (req, res) => {
     //Verificar validacion
     let resultado = validationResult(req)
@@ -225,6 +220,26 @@ const eliminar = async (req, res) => {
     await propiedad.destroy()
     res.redirect('/mis-propiedades')
 }
+
+//Muestra una propiedad ()
+    const mostrarPropiedad = async (req, res) => {
+        const {id}= req.params
+        //Comprobar que existe propiedad
+        const propiedad = await Propiedad.findByPk(id, {
+            include: [
+                { model: Precio, as: 'precio' },
+                { model : Categoria ,as: 'categoria' }
+            ]
+        })
+        if (!propiedad ) {
+            return res.redirect('/404')
+        }
+        res.render('propiedades/mostrar', {
+            propiedad,
+            pagina: propiedad.titulo
+        })
+    }
+
 export {
     admin,
     crear,
@@ -233,5 +248,6 @@ export {
     almacenarImagen,
     editar,
     guardarCambios,
-    eliminar
+    eliminar,
+    mostrarPropiedad
 }
