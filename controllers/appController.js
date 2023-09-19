@@ -19,9 +19,8 @@ const inicio = async ( req, res ) => {
             order: [
                 ['createdAt', 'DESC']
             ] 
-        })
-    ])
-            Propiedad.findAll({
+            }),
+        Propiedad.findAll({
             limit: 3,
             where: {
                 categoriaId: 4
@@ -36,7 +35,7 @@ const inicio = async ( req, res ) => {
                 ['createdAt', 'DESC']
             ] 
         })
-    
+    ])
     res.render('inicio',{
         pagina: 'Inicio',
         categorias,
