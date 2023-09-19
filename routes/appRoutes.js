@@ -1,5 +1,5 @@
 import  express  from "express";
-import {inicio,categoria,buscador,notFound} from '../controllers/appController.js'
+import {inicio, categoria, buscador, notFound} from '../controllers/appController.js'
 
 
 const router = express.Router()

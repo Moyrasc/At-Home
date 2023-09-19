@@ -17,9 +17,7 @@ const categorias = [
     {
         nombre: 'Terreno'
     },
-    {
-        nombre: 'Almacén'
-    },
+
 
 ]
 
