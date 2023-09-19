@@ -30,7 +30,15 @@
                 autoPan: true,
             })
             .addTo(mapa)
-            .bindPopup('Información Aquí')
+            .bindPopup(`
+                <p class=" font-bold" id="categoria-popup">${propiedad.categoria.nombre}</p>
+                <h1 class="text-l font-extrabold uppercase my-2">${propiedad?.titulo}</h1>
+                <img src="/uploads/${propiedad?.imagen}" alt="imagen inmueble"/>
+                <p class="text-gray-600 font-bold">${propiedad.precio.nombre}</p>
+                <a href="/propiedad/${propiedad.id}" class=" block p-2 text-center font-bold" id="inmueble">Ver Inmueble</a>
+                
+            
+            `)
 
             markers.addLayer(marker)
         })
