@@ -1,6 +1,6 @@
 import { unlink } from 'node:fs/promises'
 import { validationResult } from 'express-validator';
-import { Precio, Categoria, Propiedad, Usuario } from '../models/index.js'
+import { Precio, Categoria, Propiedad, Mensaje, Usuario } from '../models/index.js'
 import { esVendedor } from '../helpers/index.js';
 
 //Area Privada
@@ -257,7 +257,6 @@ const eliminar = async (req, res) => {
 //Muestra una propiedad ()
     const mostrarPropiedad = async (req, res) => {
         const {id}= req.params
-        
         //Comprobar que existe propiedad
         const propiedad = await Propiedad.findByPk(id, {
             include: [
@@ -278,6 +277,53 @@ const eliminar = async (req, res) => {
         })
     }
 
+    const enviarMensaje = async ( req, res ) => {
+        const {id}= req.params
+        //Comprobar que existe propiedad
+        const propiedad = await Propiedad.findByPk(id, {
+            include: [
+                { model: Precio, as: 'precio' },
+                { model : Categoria ,as: 'categoria' }
+            ]
+        })
+        if (!propiedad ) {
+            return res.redirect('/404')
+        }
+        // Renderizar errores
+        let resultado = validationResult(req)
+        if (!resultado.isEmpty()) {
+            return res.render('propiedades/mostrar', {
+                propiedad,
+                pagina: propiedad.titulo,
+                csrfToken: req.csrfToken(),
+                usuario: req.usuario,
+                esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId),
+                errores:resultado.array()
+        })
+        }
+
+        const { mensaje } = req.body
+        const { id: propiedadId } = req.params
+        const { id: usuarioId } = req.usuario
+
+        //Almacenar mensaje
+        await Mensaje.create({
+            mensaje,
+            propiedadId,
+            usuarioId
+        })
+
+        // res.redirect('/')
+            res.render('propiedades/mostrar', {
+                propiedad,
+                pagina: propiedad.titulo,
+                csrfToken: req.csrfToken(),
+                usuario: req.usuario,
+                esVendedor: esVendedor(req.usuario?.id, propiedad.usuarioId),
+                enviado: true
+    })
+}
+
 export {
     admin,
     crear,
@@ -287,5 +333,6 @@ export {
     editar,
     guardarCambios,
     eliminar,
-    mostrarPropiedad
+    mostrarPropiedad,
+    enviarMensaje
 }
