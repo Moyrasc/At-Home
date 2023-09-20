@@ -10,9 +10,16 @@ header.bg-cyan-700.p-4
 
 div(class="bg-cyan-800 py-5 hidden lg:block")
     div(class="container mx-auto flex justify-between")
-        a(href="/categorias/1" class="text-sm font-bold uppercase text-white") Casas
-        a(href="/categorias/2" class="text-sm font-bold uppercase text-white") Apartamentos
-        a(href="/categorias/3" class="text-sm font-bold uppercase text-white") Adosados
-        a(href="/categorias/4" class="text-sm font-bold uppercase text-white") Pisos
-        a(href="/categorias/5" class="text-sm font-bold uppercase text-white") Lofts
-        a(href="/categorias/6" class="text-sm font-bold uppercase text-white") Terrenos
+        nav(class="flex gap-4 items-center")
+            a(href="/categorias/1" class="text-sm font-bold uppercase text-white") Casas
+            a(href="/categorias/2" class="text-sm font-bold uppercase text-white") Apartamentos
+            a(href="/categorias/3" class="text-sm font-bold uppercase text-white") Adosados
+            a(href="/categorias/4" class="text-sm font-bold uppercase text-white") Pisos
+            a(href="/categorias/5" class="text-sm font-bold uppercase text-white") Lofts
+            a(href="/categorias/6" class="text-sm font-bold uppercase text-white") Terrenos
+
+        form(action="/buscador" method="POST" class="flex gap-3 items-center")
+            input(type="hidden" name="_csrf" value=csrfToken)
+            label(for="termino" class="text-sm uppercase font-bold text-white") Búsqueda 
+            input(type="text" id="termino" name="termino" placeholder="Buscar inmuebles" class="p-2 rounded-lg shadow text-sm")
+            input(type="submit" class="bg-cyan-700 hover:bg-cyan-600 rounded-lg text-white uppercase font-bold p-2 cursor-pointer text-sm" value="Buscar")
