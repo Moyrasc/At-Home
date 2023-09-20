@@ -67,7 +67,7 @@ At-Home es una aplicación web que te permite crear tu propio portal inmobiliari
 
 <br/>
 
-3.  Configura la base de datos MySQL en config/config.json con tus credenciales.
+3.  Configura la base de datos MySQL en config/db.js con tus credenciales.
 
 4.  Ejecuta las migraciones para crear las tablas en la base de datos:
 
