@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { admin, agregarImagen, almacenarImagen, crear, guardar, editar, guardarCambios, eliminar, mostrarPropiedad,enviarMensaje,leerMensajes
+import { admin, agregarImagen, almacenarImagen, crear, guardar, editar, guardarCambios, eliminar,cambiarEstado, mostrarPropiedad, enviarMensaje, leerMensajes
  } from "../controllers/propiedadController.js";
 import protegerRuta from "../middleware/protegerRuta.js";
 import upload from "../middleware/subirImagen.js";
@@ -45,6 +45,7 @@ router.post('/propiedades/editar/:id', protegerRuta,
 
 router.post('/propiedades/eliminar/:id',protegerRuta, eliminar)
 
+router.put('/propiedades/:id', protegerRuta, cambiarEstado)
 //Area Publica
 router.get('/propiedad/:id', identificarUsuario,mostrarPropiedad)
 
