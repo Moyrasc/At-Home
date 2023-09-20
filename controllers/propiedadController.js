@@ -1,7 +1,7 @@
 import { unlink } from 'node:fs/promises'
 import { validationResult } from 'express-validator';
 import { Precio, Categoria, Propiedad, Mensaje, Usuario } from '../models/index.js'
-import { esVendedor } from '../helpers/index.js';
+import { esVendedor, formateaFecha } from '../helpers/index.js';
 
 //Area Privada
 const admin = async (req, res) => {
@@ -29,7 +29,8 @@ const admin = async (req, res) => {
                 },
                 include: [
                     { model: Categoria },
-                    { model: Precio }
+                    { model: Precio },
+                    { model: Mensaje, as: 'mensajes'}
                 ],
             }),
             Propiedad.count({
@@ -323,7 +324,33 @@ const eliminar = async (req, res) => {
                 enviado: true
     })
 }
+//Leer mensajes recibidos
+    const leerMensajes =  async (req, res)=>{
+        const {id} = req.params
+        // Validar que la propiedad exista
+        const propiedad = await Propiedad.findByPk (id, {
+            include:[
 
+                { model:Mensaje, as: 'mensajes',
+                    include: [
+                        {model: Usuario.scope('eliminarPassword'), as:'usuario'}
+                    ]
+            }
+            ]
+        })
+        if(!propiedad) {
+            return res.redirect('/mis-propiedades')
+        }
+        // Revisar que quien visita la URL, es quien creo la propiedad
+        if(propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+            return res.redirect('/mis-propiedades')
+        }
+        res.render('propiedades/mensajes',{
+            pagina:'Mensajes',
+            mensajes: propiedad.mensajes,
+            formateaFecha
+        })
+    }
 export {
     admin,
     crear,
@@ -334,5 +361,6 @@ export {
     guardarCambios,
     eliminar,
     mostrarPropiedad,
-    enviarMensaje
+    enviarMensaje,
+    leerMensajes
 }
