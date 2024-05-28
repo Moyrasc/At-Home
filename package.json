@@ -37,7 +37,7 @@
     "mysql2": "^3.9.7",
     "nodemailer": "^6.9.9",
     "nodemon": "^2.0.22",
-    "pug": "^3.0.2",
+    "pug": "^3.0.3",
     "sequelize": "^6.32.0"
   },
   "devDependencies": {
