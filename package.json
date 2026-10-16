@@ -38,7 +38,7 @@
     "nodemailer": "^10.0.9",
     "nodemon": "^2.0.22",
     "pug": "^3.0.3",
-    "sequelize": "^6.32.0"
+    "sequelize": "^6.37.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
